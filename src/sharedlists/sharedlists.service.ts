@@ -20,7 +20,7 @@ export class SharedlistsService {
   async searchSharedlist(sharedlistId: string): Promise<Sharedlist> {
     return await this.sharedlistRepository.findOne({
       where: { id: sharedlistId },
-      relations: ['creator', 'participants'],
+      relations: ['creator', 'participants', 'movies'],
     });
   }
 

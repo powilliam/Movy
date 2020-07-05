@@ -2,11 +2,13 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  OneToMany,
   ManyToOne,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
 import { User } from '../users/user.entity';
+import { Movie } from '../movies/movie.entity';
 
 @Entity()
 export class Sharedlist {
@@ -35,4 +37,11 @@ export class Sharedlist {
   )
   @JoinTable()
   public participants!: User[];
+
+  @OneToMany(
+    () => Movie,
+    movie => movie.sharedlist,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
+  )
+  public movies!: Movie[];
 }
