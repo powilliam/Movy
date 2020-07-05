@@ -27,4 +27,8 @@ export class MoviesService {
 
     return movie;
   }
+
+  async deleteMovie(movieId: string): Promise<void> {
+    await this.movieRepository.delete({ id: movieId });
+  }
 }

@@ -24,10 +24,6 @@ export interface CreateResponse {
   sharedlist: Sharedlist;
 }
 
-export interface DeleteResponse {
-  statusCode: number;
-}
-
 @Controller('sharedlists')
 export class SharedlistsController {
   constructor(
@@ -68,10 +64,8 @@ export class SharedlistsController {
   }
 
   @Delete(':sharedlistId')
-  async destroy(
-    @Param('sharedlistId') sharedlistId: string,
-  ): Promise<DeleteResponse> {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async destroy(@Param('sharedlistId') sharedlistId: string): Promise<void> {
     await this.sharedlistsService.deleteSharedlist(sharedlistId);
-    return { statusCode: HttpStatus.OK };
   }
 }

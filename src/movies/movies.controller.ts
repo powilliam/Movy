@@ -1,10 +1,12 @@
 import {
   Controller,
   Post,
+  Delete,
   HttpCode,
   HttpException,
   HttpStatus,
   Body,
+  Param,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDTO } from './dto/create-movie.dto';
@@ -59,5 +61,11 @@ export class MoviesController {
     });
 
     return { statusCode: HttpStatus.CREATED, movie };
+  }
+
+  @Delete(':movieId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async destroy(@Param('movieId') movieId: string): Promise<void> {
+    await this.moviesService.deleteMovie(movieId);
   }
 }
