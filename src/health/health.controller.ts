@@ -13,7 +13,7 @@ export class HealthController {
     private typeorm: TypeOrmHealthIndicator,
   ) {}
 
-  @Get('database')
+  @Get()
   @HealthCheck()
   check(): Promise<HealthCheckResult> {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
