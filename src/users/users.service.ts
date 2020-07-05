@@ -12,8 +12,12 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  async isRegistered(username: string): Promise<User> {
+  async findOne(username: string): Promise<User> {
     return await this.userRepository.findOne({ where: { username } });
+  }
+
+  async findById(id: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { id } });
   }
 
   async createUser({ username, password }: CreateUserDTO): Promise<User> {

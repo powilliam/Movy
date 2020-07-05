@@ -24,11 +24,14 @@ export class UsersController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDTO: CreateUserDTO): Promise<CreatedResponse> {
-    if (await this.usersService.isRegistered(createUserDTO.username)) {
+    const isRegistered = await this.usersService.findOne(
+      createUserDTO.username,
+    );
+    if (isRegistered) {
       throw new HttpException('User already exists', HttpStatus.CONFLICT);
     }
 
-    const { id, username } = await this.usersService.createUser(createUserDTO);
-    return { statusCode: HttpStatus.CREATED, user: { id, username } };
+    const user = await this.usersService.createUser(createUserDTO);
+    return { statusCode: HttpStatus.CREATED, user };
   }
 }
