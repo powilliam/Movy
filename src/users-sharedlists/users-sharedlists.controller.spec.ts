@@ -9,7 +9,9 @@ describe('UsersSharedlists Controller', () => {
       controllers: [UsersSharedlistsController],
     }).compile();
 
-    controller = module.get<UsersSharedlistsController>(UsersSharedlistsController);
+    controller = module.get<UsersSharedlistsController>(
+      UsersSharedlistsController,
+    );
   });
 
   it('should be defined', () => {

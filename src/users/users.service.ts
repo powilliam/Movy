@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -12,15 +12,14 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  async findOne(username: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { username } });
-  }
-
-  async findById(id: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { id } });
-  }
-
   async createUser({ username, password }: CreateUserDTO): Promise<User> {
+    const isRegistered = await this.userRepository.findOne({
+      where: { username },
+    });
+    if (isRegistered) {
+      throw new ConflictException('User already exists');
+    }
+
     const salt = CryptoJS.lib.WordArray.random(128 / 8);
     const hashedPassword = CryptoJS.PBKDF2(password, salt).toString();
 

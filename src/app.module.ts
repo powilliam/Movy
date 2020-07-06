@@ -7,6 +7,13 @@ import { MoviesModule } from './movies/movies.module';
 import { UsersSharedlistsModule } from './users-sharedlists/users-sharedlists.module';
 
 @Module({
-  imports: [DatabaseModule, UsersModule, SharedlistsModule, HealthModule, MoviesModule, UsersSharedlistsModule],
+  imports: [
+    DatabaseModule,
+    UsersModule,
+    SharedlistsModule,
+    HealthModule,
+    MoviesModule,
+    UsersSharedlistsModule,
+  ],
 })
 export class AppModule {}
