@@ -15,18 +15,8 @@ export class MoviesService {
   ) {}
 
   async createMovie(createMovieDTO: CreateMovieDTO): Promise<Movie> {
-    const {
-      title,
-      overview,
-      identifier,
-      backdrop,
-      voteAverage,
-      releaseDate,
-      sharedlistId,
-    } = createMovieDTO;
-
     const sharedlist = await this.sharedlistRepository.findOne({
-      where: { id: sharedlistId },
+      where: { id: createMovieDTO.sharedlistId },
     });
     if (!sharedlist) {
       throw new NotFoundException(
@@ -35,12 +25,7 @@ export class MoviesService {
     }
 
     const movie = this.movieRepository.create({
-      title,
-      overview,
-      identifier,
-      backdrop,
-      voteAverage,
-      releaseDate,
+      ...createMovieDTO,
       sharedlist,
     });
     await this.movieRepository.save(movie);
