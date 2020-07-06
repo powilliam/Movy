@@ -6,11 +6,6 @@ import { randomBytes } from 'crypto';
 import { User } from 'src/users/user.entity';
 import { CreateSharedlistDTO } from './dto/create-sharedlist.dto';
 
-export interface CreateSharedlist {
-  name: string;
-  creator: User;
-}
-
 @Injectable()
 export class SharedlistsService {
   constructor(

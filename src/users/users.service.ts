@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDTO } from './dto/create-user.dto';
-import * as CryptoJS from 'crypto-js';
+import { hash } from 'argon2';
 
 @Injectable()
 export class UsersService {
@@ -20,8 +20,7 @@ export class UsersService {
       throw new ConflictException('User already exists');
     }
 
-    const salt = CryptoJS.lib.WordArray.random(128 / 8);
-    const hashedPassword = CryptoJS.PBKDF2(password, salt).toString();
+    const hashedPassword = await hash(password);
 
     const user = this.userRepository.create({
       username,

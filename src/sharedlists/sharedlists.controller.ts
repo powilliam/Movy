@@ -7,11 +7,14 @@ import {
   HttpStatus,
   Body,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { SharedlistsService } from './sharedlists.service';
 import { Sharedlist } from './sharedlist.entity';
 import { CreateSharedlistDTO } from './dto/create-sharedlist.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('sharedlists')
 export class SharedlistsController {
   constructor(private readonly sharedlistsService: SharedlistsService) {}

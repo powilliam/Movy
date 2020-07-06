@@ -1,9 +1,11 @@
-import { Controller, Post, Body, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Delete, UseGuards } from '@nestjs/common';
 import { UsersSharedlistsService } from './users-sharedlists.service';
 import { JoinSharedlistDTO } from './dto/join-sharedlist.dto';
 import { LeaveSharedlistDTO } from './dto/leave-sharedlist.dto';
 import { Sharedlist } from 'src/sharedlists/sharedlist.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('users-sharedlists')
 export class UsersSharedlistsController {
   constructor(

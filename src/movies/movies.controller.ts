@@ -6,11 +6,14 @@ import {
   HttpStatus,
   Body,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDTO } from './dto/create-movie.dto';
 import { Movie } from './movie.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
